@@ -12,7 +12,7 @@ w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.overrideredirect(1)
 root.geometry("%dx%d+0+0" % (w, h))
 root.focus_set()
-canvas = tkinter.Canvas(root,width=w,height=h)
+canvas = tkinter.Canvas(root,width=w,height=h,bd=0, highlightthickness=0, relief='ridge')
 canvas.pack()
 canvas.configure(background='black')
 
@@ -31,13 +31,18 @@ def showPIL(pilImage):
 #    root.bind("<Escape>", lambda e: (e.widget.withdraw(), e.widget.quit()))
 
 
-names = os.listdir('./slides')
+dirname = os.path.dirname(__file__)
+slides_path = os.path.join(dirname, "slides")
+names = os.listdir(slides_path)
+print(dirname)
 
 while True:
     for file in names:
+        file_path = os.path.join(dirname, file)
+        print(file_path)
         print(file)
         if file[-4:] == ".jpg":
-            file=Image.open("./slides/"+file)
+            file=Image.open(os.path.join(slides_path, file))
             showPIL(file)
 
-            time.sleep(5)
+        time.sleep(5)
